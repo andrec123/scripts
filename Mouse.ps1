@@ -21,6 +21,6 @@ while ($true) {
         }
     }
 
-    # Sleep for 5 seconds before checking again
+    # Sleep for 3 seconds before checking again
     Start-Sleep -Seconds 3
 }
