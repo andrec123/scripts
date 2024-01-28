@@ -1,4 +1,4 @@
-﻿# Function to perform IP sweep
+# Function to perform IP sweep
 function Invoke-IpSweep {
     param(
         [string]$subnet
@@ -7,14 +7,14 @@ function Invoke-IpSweep {
     # Construct the IP range from the subnet
     $ipRange = 1..254 | ForEach-Object { "$subnet.$_" }
 
-    # Loop through each IP address and send a single ping request
+    # Loop through each IP address
     foreach ($ip in $ipRange) {
         $result = Test-Connection -ComputerName $ip -Count 1 -ErrorAction SilentlyContinue
 
-        if ($result) {
+        if ($result.StatusCode -eq 0) {
             Write-Host "$ip is online"
-        } else {
-            Write-Host "$ip is offline"
+        } elseif ($result.Exception -ne $null) {
+            Write-Host "$ip is offline or unreachable"
         }
     }
 }
